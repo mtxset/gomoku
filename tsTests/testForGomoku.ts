@@ -1,15 +1,15 @@
-const TTT = artifacts.require("TTT")
+const Gomoku = artifacts.require("Gomoku")
 import {expectThrow} from "./helpers/index"
 import * as assert from "assert"
 
 let player1, player2, thirdWheel;
-let ttt = null;
+let go = null;
 
-contract("TTT", (accounts)=> {
+contract("Gomoku", (accounts)=> {
 
     before(async()=>
     {
-        ttt = await TTT.deployed()
+        go = await Gomoku.deployed()
         player1 = accounts[0];
         player2 = accounts[1];
         thirdWheel = accounts[2];
@@ -20,78 +20,70 @@ contract("TTT", (accounts)=> {
         it("2 Players should join ", async()=> 
         {
 
-            await ttt.JoinGame({from: player1});
-            assert.equal(await ttt.Player1(), player1,"Addresses should be equal")
+            await go.JoinGame({from: player1});
+            assert.equal(await go.Player1(), player1, "Addresses should be equal")
 
-            await ttt.JoinGame({from: player2});
-            assert.equal(await ttt.Player2(), player2, "Addresses should be equal")
+            await go.JoinGame({from: player2});
+            assert.equal(await go.Player2(), player2, "Addresses should be equal")
         });
 
-        it("3 player should not be able to join", async() => {
-            await expectThrow(ttt.JoinGame({from:thirdWheel}));
-
-            assert.equal(await ttt.Player1(), player1, "Addresses should be equal")
-            assert.equal(await ttt.Player2(), player2, "Addresses should be equal")
-        });
-    })
-
-    contract("Test reset: Players joining again", ()=>
-    {
-        it("2 Players can join again", async()=>
+        it("3 player should not be able to join", async() => 
         {
-            ttt.JoinGame({from: player1});
-            assert.equal(await ttt.Player1(), player1,"Addresses should be equal")
+            await expectThrow(go.JoinGame({from:thirdWheel}));
 
-            ttt.JoinGame({from: player2});
-            assert.equal(await ttt.Player2(), player2, "Addresses should be equal")
-        })
+            assert.equal(await go.Player1(), player1, "Addresses should be equal")
+            assert.equal(await go.Player2(), player2, "Addresses should be equal")
+        });
     })
 
     contract("Full Game Sequence", async()=>
     {
         it("Should play full game", async()=>
         {
-            await ttt.JoinGame({from: player1})
-            await ttt.JoinGame({from: player2})
+            await go.JoinGame({from: player1})
+            await go.JoinGame({from: player2})
 
-            assert.equal(await ttt.Player1(), player1,"Addresses should be equal")
-            assert.equal(await ttt.Player2(), player2,"Addresses should be equal")
+            assert.equal(await go.Player1(), player1,"Addresses should be equal")
+            assert.equal(await go.Player2(), player2,"Addresses should be equal")
 
-            assert.equal(await ttt.WaitingForPlayersMove(), player1, "Addresses should match")
+            assert.equal(await go.WaitingForPlayersMove(), player1, "Addresses should match")
 
-            let gameState = await ttt.GameState()
+            let gameState = await go.GameState()
 
-            assert.equal(gameState[0], "---"); 
-            assert.equal(gameState[1], "---"); 
-            assert.equal(gameState[2], "---");
+            assert.equal(gameState.length, 361);
 
             // Make first move
-            await ttt.MakeMove(1, {from: player1})
+            await go.MakeMove(1, 1, {from: player1})
 
-            gameState = await ttt.GameState()
+            gameState = await go.GameState()
 
-            assert.equal(gameState[0], "X--"); 
-            assert.equal(gameState[1], "---"); 
-            assert.equal(gameState[2], "---");
+            assert.equal(gameState[0], "X"); 
 
-            await ttt.MakeMove(2, {from: player2})
+            await go.MakeMove(2, 2, {from: player2})
 
-            gameState = await ttt.GameState()
+            gameState = await go.GameState()
 
-            assert.equal(gameState[0], "XO-"); 
-            assert.equal(gameState[1], "---"); 
-            assert.equal(gameState[2], "---");
+            //assert.equal(gameState[0], "O"); 
 
-            await ttt.MakeMove(4, {from: player1})
-            await ttt.MakeMove(5, {from: player2})
-            await ttt.MakeMove(7, {from: player1})
+            await go.MakeMove(1, 2, {from: player1})
+            await go.MakeMove(3, 3, {from: player2})
 
-            gameState = await ttt.GameState()
+            await go.MakeMove(1, 3, {from: player1})
+            await go.MakeMove(4, 4, {from: player2})
 
-            assert.equal(gameState[2], "GG WP");
+            await go.MakeMove(1, 4, {from: player1})
+            await go.MakeMove(5, 5, {from: player2})
 
+            assert.equal(await go.GetLastWinnerAddress(), 0);
+            
+            await go.MakeMove(1, 5, {from: player1})
+
+            gameState = await go.GameState()
+
+            //assert.equal(gameState, "GG WP");
+            
             // check for winner address
-            assert.equal(await ttt.GetLastWinnerAddress(), player1);
+            assert.equal(await go.GetLastWinnerAddress(), player1);
         })
     })
 

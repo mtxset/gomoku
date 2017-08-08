@@ -166,6 +166,9 @@ contract Gomoku
     function GameState() public constant
     returns (string)
     {
+        if (_winner > 0)
+            return ("Check Last Winner GetLastWinnerAddress, GG WP");
+            
         bytes[19] memory rows;
         
         for (uint8 i = 0; i < 19; i++)
@@ -218,9 +221,8 @@ contract Gomoku
 
     modifier CheckIfUniquePlayer()
     {
-        // DEBUG MODE: allow same sender
-        //if (_player1 == msg.sender || _player2 == msg.sender)
-          //  revert();
+        if (_player1 == msg.sender || _player2 == msg.sender)
+            revert();
 
         _;
     }
