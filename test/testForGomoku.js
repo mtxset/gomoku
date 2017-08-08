@@ -171,18 +171,14 @@ contract("Gomoku", function (accounts) {
                             return [4 /*yield*/, go.MakeMove(1, 5, { from: player1 })];
                         case 18:
                             _l.sent();
-                            return [4 /*yield*/, go.GameState()
-                                //assert.equal(gameState, "GG WP");
-                                // check for winner address
-                            ];
+                            return [4 /*yield*/, go.GameState()];
                         case 19:
                             gameState = _l.sent();
-                            //assert.equal(gameState, "GG WP");
+                            assert.equal(gameState, "Check Last Winner GetLastWinnerAddress, GG WP");
                             // check for winner address
                             _k = (_j = assert).equal;
                             return [4 /*yield*/, go.GetLastWinnerAddress()];
                         case 20:
-                            //assert.equal(gameState, "GG WP");
                             // check for winner address
                             _k.apply(_j, [_l.sent(), player1]);
                             return [2 /*return*/];

@@ -75,12 +75,12 @@ contract("Gomoku", (accounts)=> {
             await go.MakeMove(5, 5, {from: player2})
 
             assert.equal(await go.GetLastWinnerAddress(), 0);
-            
+
             await go.MakeMove(1, 5, {from: player1})
 
-            gameState = await go.GameState()
+            gameState = await go.GameState();
 
-            //assert.equal(gameState, "GG WP");
+            assert.equal(gameState, "Check Last Winner GetLastWinnerAddress, GG WP");
             
             // check for winner address
             assert.equal(await go.GetLastWinnerAddress(), player1);

@@ -21,3 +21,4 @@ Run
 Bugs
 ====
 - Game hangs if no move is made
+- No check for ties (Never had one, but still)
