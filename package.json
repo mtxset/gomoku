@@ -1,0 +1,24 @@
+{
+  "name": "gomoku",
+  "version": "1.0.0",
+  "description": "Gomoko game for Ethereum",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/mtxset/gomoku.git"
+  },
+  "keywords": [
+    "Ethereum",
+    "Gomoku",
+    "Solidity"
+  ],
+  "author": "mtxset",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mtxset/gomoku/issues"
+  },
+  "homepage": "https://github.com/mtxset/gomoku#readme"
+}
