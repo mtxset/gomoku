@@ -98,5 +98,91 @@ contract("Gomoku", function (accounts) {
             });
         }); });
     });
+    contract("Full Game Sequence", function () { return __awaiter(_this, void 0, void 0, function () {
+        var _this = this;
+        return __generator(this, function (_a) {
+            it("Should play full game", function () { return __awaiter(_this, void 0, void 0, function () {
+                var _a, _b, gameState, _c, _d;
+                return __generator(this, function (_e) {
+                    switch (_e.label) {
+                        case 0: return [4 /*yield*/, go.JoinGame({ from: player1 })];
+                        case 1:
+                            _e.sent();
+                            return [4 /*yield*/, go.JoinGame({ from: player2 })];
+                        case 2:
+                            _e.sent();
+                            _a = chai_1.expect;
+                            return [4 /*yield*/, go.Player1()];
+                        case 3:
+                            _a.apply(void 0, [_e.sent(), "Addresses should be equal"]).to.equal(player1);
+                            _b = chai_1.expect;
+                            return [4 /*yield*/, go.Player2()];
+                        case 4:
+                            _b.apply(void 0, [_e.sent(), "Addresses should be equal"]).to.equal(player2);
+                            return [4 /*yield*/, go.GameState()];
+                        case 5:
+                            gameState = _e.sent();
+                            chai_1.expect(gameState.length, "Length is incorrect").to.equal(361);
+                            // Make first move
+                            return [4 /*yield*/, go.MakeMove(1, 1, { from: player1 })];
+                        case 6:
+                            // Make first move
+                            _e.sent();
+                            return [4 /*yield*/, go.GameState()];
+                        case 7:
+                            gameState = _e.sent();
+                            chai_1.expect(gameState[0]).to.equal("X");
+                            return [4 /*yield*/, go.MakeMove(2, 2, { from: player2 })];
+                        case 8:
+                            _e.sent();
+                            return [4 /*yield*/, go.GameState()
+                                //assert.equal(gameState[0], "O"); 
+                            ];
+                        case 9:
+                            gameState = _e.sent();
+                            //assert.equal(gameState[0], "O"); 
+                            return [4 /*yield*/, go.MakeMove(1, 2, { from: player1 })];
+                        case 10:
+                            //assert.equal(gameState[0], "O"); 
+                            _e.sent();
+                            return [4 /*yield*/, go.MakeMove(3, 3, { from: player2 })];
+                        case 11:
+                            _e.sent();
+                            return [4 /*yield*/, go.MakeMove(1, 3, { from: player1 })];
+                        case 12:
+                            _e.sent();
+                            return [4 /*yield*/, go.MakeMove(4, 4, { from: player2 })];
+                        case 13:
+                            _e.sent();
+                            return [4 /*yield*/, go.MakeMove(1, 4, { from: player1 })];
+                        case 14:
+                            _e.sent();
+                            return [4 /*yield*/, go.MakeMove(5, 5, { from: player2 })];
+                        case 15:
+                            _e.sent();
+                            _c = chai_1.expect;
+                            return [4 /*yield*/, go.GetLastWinnerAddress()];
+                        case 16:
+                            _c.apply(void 0, [_e.sent()]).to.equal("0x0000000000000000000000000000000000000000");
+                            return [4 /*yield*/, go.MakeMove(1, 5, { from: player1 })];
+                        case 17:
+                            _e.sent();
+                            return [4 /*yield*/, go.GameState()];
+                        case 18:
+                            gameState = _e.sent();
+                            chai_1.expect(gameState).to.equal("Check Last Winner GetLastWinnerAddress, GG WP");
+                            // check for winner address
+                            _d = chai_1.expect;
+                            return [4 /*yield*/, go.GetLastWinnerAddress()];
+                        case 19:
+                            // check for winner address
+                            _d.apply(void 0, [_e.sent()]).to.equal(player1);
+                            return [2 /*return*/];
+                    }
+                });
+            }); });
+            return [2 /*return*/];
+        });
+    }); });
 });
 //# sourceMappingURL=testForGomoku.js.map
