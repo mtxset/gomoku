@@ -38,7 +38,7 @@ var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var Gomoku = artifacts.require("Gomoku");
 var index_1 = require("./helpers/index");
-var assert = require("assert");
+var chai_1 = require("chai");
 var player1, player2, thirdWheel;
 var go = null;
 contract("Gomoku", function (accounts) {
@@ -57,136 +57,46 @@ contract("Gomoku", function (accounts) {
     }); });
     contract("Players joining", function () {
         it("2 Players should join ", function () { return __awaiter(_this, void 0, void 0, function () {
-            var _a, _b, _c, _d;
-            return __generator(this, function (_e) {
-                switch (_e.label) {
+            var _a, _b;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
                     case 0: return [4 /*yield*/, go.JoinGame({ from: player1 })];
                     case 1:
-                        _e.sent();
-                        _b = (_a = assert).equal;
+                        _c.sent();
+                        _a = chai_1.expect;
                         return [4 /*yield*/, go.Player1()];
                     case 2:
-                        _b.apply(_a, [_e.sent(), player1, "Addresses should be equal"]);
+                        _a.apply(void 0, [_c.sent(), "Addresses should be equal"]).to.equal(player1);
                         return [4 /*yield*/, go.JoinGame({ from: player2 })];
                     case 3:
-                        _e.sent();
-                        _d = (_c = assert).equal;
+                        _c.sent();
+                        _b = chai_1.expect;
                         return [4 /*yield*/, go.Player2()];
                     case 4:
-                        _d.apply(_c, [_e.sent(), player2, "Addresses should be equal"]);
+                        _b.apply(void 0, [_c.sent(), "Addresses should be equal"]).to.equal(player2);
                         return [2 /*return*/];
                 }
             });
         }); });
         it("3 player should not be able to join", function () { return __awaiter(_this, void 0, void 0, function () {
-            var _a, _b, _c, _d;
-            return __generator(this, function (_e) {
-                switch (_e.label) {
+            var _a, _b;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
                     case 0: return [4 /*yield*/, index_1.expectThrow(go.JoinGame({ from: thirdWheel }))];
                     case 1:
-                        _e.sent();
-                        _b = (_a = assert).equal;
+                        _c.sent();
+                        _a = chai_1.expect;
                         return [4 /*yield*/, go.Player1()];
                     case 2:
-                        _b.apply(_a, [_e.sent(), player1, "Addresses should be equal"]);
-                        _d = (_c = assert).equal;
+                        _a.apply(void 0, [_c.sent(), "Addresses should be equal"]).to.equal(player1);
+                        _b = chai_1.expect;
                         return [4 /*yield*/, go.Player2()];
                     case 3:
-                        _d.apply(_c, [_e.sent(), player2, "Addresses should be equal"]);
+                        _b.apply(void 0, [_c.sent(), "Addresses should be equal"]).to.equal(player2);
                         return [2 /*return*/];
                 }
             });
         }); });
     });
-    contract("Full Game Sequence", function () { return __awaiter(_this, void 0, void 0, function () {
-        var _this = this;
-        return __generator(this, function (_a) {
-            it("Should play full game", function () { return __awaiter(_this, void 0, void 0, function () {
-                var _a, _b, _c, _d, _e, _f, gameState, _g, _h, _j, _k;
-                return __generator(this, function (_l) {
-                    switch (_l.label) {
-                        case 0: return [4 /*yield*/, go.JoinGame({ from: player1 })];
-                        case 1:
-                            _l.sent();
-                            return [4 /*yield*/, go.JoinGame({ from: player2 })];
-                        case 2:
-                            _l.sent();
-                            _b = (_a = assert).equal;
-                            return [4 /*yield*/, go.Player1()];
-                        case 3:
-                            _b.apply(_a, [_l.sent(), player1, "Addresses should be equal"]);
-                            _d = (_c = assert).equal;
-                            return [4 /*yield*/, go.Player2()];
-                        case 4:
-                            _d.apply(_c, [_l.sent(), player2, "Addresses should be equal"]);
-                            _f = (_e = assert).equal;
-                            return [4 /*yield*/, go.WaitingForPlayersMove()];
-                        case 5:
-                            _f.apply(_e, [_l.sent(), player1, "Addresses should match"]);
-                            return [4 /*yield*/, go.GameState()];
-                        case 6:
-                            gameState = _l.sent();
-                            assert.equal(gameState.length, 361);
-                            // Make first move
-                            return [4 /*yield*/, go.MakeMove(1, 1, { from: player1 })];
-                        case 7:
-                            // Make first move
-                            _l.sent();
-                            return [4 /*yield*/, go.GameState()];
-                        case 8:
-                            gameState = _l.sent();
-                            assert.equal(gameState[0], "X");
-                            return [4 /*yield*/, go.MakeMove(2, 2, { from: player2 })];
-                        case 9:
-                            _l.sent();
-                            return [4 /*yield*/, go.GameState()
-                                //assert.equal(gameState[0], "O"); 
-                            ];
-                        case 10:
-                            gameState = _l.sent();
-                            //assert.equal(gameState[0], "O"); 
-                            return [4 /*yield*/, go.MakeMove(1, 2, { from: player1 })];
-                        case 11:
-                            //assert.equal(gameState[0], "O"); 
-                            _l.sent();
-                            return [4 /*yield*/, go.MakeMove(3, 3, { from: player2 })];
-                        case 12:
-                            _l.sent();
-                            return [4 /*yield*/, go.MakeMove(1, 3, { from: player1 })];
-                        case 13:
-                            _l.sent();
-                            return [4 /*yield*/, go.MakeMove(4, 4, { from: player2 })];
-                        case 14:
-                            _l.sent();
-                            return [4 /*yield*/, go.MakeMove(1, 4, { from: player1 })];
-                        case 15:
-                            _l.sent();
-                            return [4 /*yield*/, go.MakeMove(5, 5, { from: player2 })];
-                        case 16:
-                            _l.sent();
-                            _h = (_g = assert).equal;
-                            return [4 /*yield*/, go.GetLastWinnerAddress()];
-                        case 17:
-                            _h.apply(_g, [_l.sent(), 0]);
-                            return [4 /*yield*/, go.MakeMove(1, 5, { from: player1 })];
-                        case 18:
-                            _l.sent();
-                            return [4 /*yield*/, go.GameState()];
-                        case 19:
-                            gameState = _l.sent();
-                            assert.equal(gameState, "Check Last Winner GetLastWinnerAddress, GG WP");
-                            // check for winner address
-                            _k = (_j = assert).equal;
-                            return [4 /*yield*/, go.GetLastWinnerAddress()];
-                        case 20:
-                            // check for winner address
-                            _k.apply(_j, [_l.sent(), player1]);
-                            return [2 /*return*/];
-                    }
-                });
-            }); });
-            return [2 /*return*/];
-        });
-    }); });
 });
 //# sourceMappingURL=testForGomoku.js.map

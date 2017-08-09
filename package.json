@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/mtxset/gomoku/issues"
   },
-  "homepage": "https://github.com/mtxset/gomoku#readme"
+  "homepage": "https://github.com/mtxset/gomoku#readme",
+  "devDependencies": {
+    "chai": "^4.1.1"
+  }
 }
